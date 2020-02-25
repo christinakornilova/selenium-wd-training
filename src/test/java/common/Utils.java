@@ -5,6 +5,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 
 public class Utils {
 
@@ -19,6 +21,14 @@ public class Utils {
         WebElement el = new WebDriverWait(driver, 15).ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOfElementLocated(by));
         System.out.println("Element located by " + xpath + " appeared after " + (System.currentTimeMillis() - start) + " ms");
         return el;
+    }
+
+    public static List<WebElement> waitAndGetElementsList(WebDriver driver, String xpath) {
+        long start = System.currentTimeMillis();
+        By by = By.xpath(xpath);
+        List<WebElement> elementList = new WebDriverWait(driver, 15).ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+        System.out.println("Elements list located by " + xpath + " appeared after " + (System.currentTimeMillis() - start) + " ms");
+        return  elementList;
     }
 
     public static void clearAndFillField(WebElement el, String data) {
