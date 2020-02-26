@@ -28,7 +28,7 @@ public class CatalogEx8 {
         driver.get("http://localhost/litecart/en/");
         List<WebElement> list = waitAndGetElementsList(driver, "//li[@class='product column shadow hover-light']");
         for (WebElement el: list) {
-            Assert.assertTrue("Item has more then one sticker", el.findElements(By.xpath("./a/div/div[starts-with(@class,'sticker')]")).size()==1);
+            Assert.assertTrue("Item has more then one sticker", el.findElements(By.xpath("./descendant::div[starts-with(@class,'sticker')]")).size()==1);
         }
 
     }
