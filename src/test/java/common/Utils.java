@@ -23,11 +23,14 @@ public class Utils {
         return el;
     }
 
-    public static List<WebElement> waitAndGetElementsList(WebDriver driver, String xpath) {
+    public static List<WebElement> waitAndGetElementsListByXpath(WebDriver driver, String xpath) {
+        return waitAndGetElementsList(driver, By.xpath(xpath));
+    }
+
+    public static List<WebElement> waitAndGetElementsList(WebDriver driver, By by) {
         long start = System.currentTimeMillis();
-        By by = By.xpath(xpath);
         List<WebElement> elementList = new WebDriverWait(driver, 15).ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
-        System.out.println("Elements list located by " + xpath + " appeared after " + (System.currentTimeMillis() - start) + " ms");
+        System.out.println("Elements list located by " + by + " appeared after " + (System.currentTimeMillis() - start) + " ms");
         return  elementList;
     }
 
