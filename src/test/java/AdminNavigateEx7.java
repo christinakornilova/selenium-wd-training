@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static common.Utils.*;
+import static litecart.common.Utils.*;
 
 public class AdminNavigateEx7 {
 
@@ -47,7 +47,7 @@ public class AdminNavigateEx7 {
     public void myFirstTest() {
         try {
             //login
-            String loginPwd = "admin";
+            String loginPwd = "litecart/admin";
 
             driver.get("http://localhost/litecart/admin/");
             wait.until(ExpectedConditions.urlContains("litecart/admin/"));

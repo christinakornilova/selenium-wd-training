@@ -31,7 +31,7 @@ public class LoginTestEx3 {
     @Test
     public void myFirstTest() {
         try {
-            String loginPwd = "admin";
+            String loginPwd = "litecart/admin";
 
             driver.get("http://localhost/litecart/admin/");
             wait.until(ExpectedConditions.urlContains("litecart/admin/"));

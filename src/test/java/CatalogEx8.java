@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-import static common.Utils.*;
+import static litecart.common.Utils.*;
 
 public class CatalogEx8 {
 
