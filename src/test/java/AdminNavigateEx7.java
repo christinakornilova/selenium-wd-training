@@ -33,12 +33,12 @@ public class AdminNavigateEx7 {
 
     private void navigateAssertTitle(WebDriver driver, String menuItemName, boolean hasSubItems) {
         do {
-            waitAndGetElement(driver, composeLocator(menuItemName));
+            waitAndGetElementByXpath(driver, composeLocator(menuItemName));
             driver.findElement(By.xpath(composeLocator(menuItemName))).click();
             waitForJS(driver);
         } while (hasSubItems && !isElementPresent(By.xpath("//li/ul/li[@class='selected']/a/span"), driver));
-        waitAndGetElement(driver, "//td[@id='content']");
-        waitAndGetElement(driver, "//h1");
+        waitAndGetElementByXpath(driver, "//td[@id='content']");
+        waitAndGetElementByXpath(driver, "//h1");
         Assert.assertTrue("No header displayed on page", isElementPresent(By.xpath("//h1"), driver));
 //        waitForSeconds(1);
     }

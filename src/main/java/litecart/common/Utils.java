@@ -14,20 +14,19 @@ public class Utils {
     public static Logger log = LogManager.getLogger(Utils.class);
     public static final int defaultTimeout = 10;
 
-    public static WebElement waitAndGetElementByName(WebDriver driver, String locator) {
+    public static WebElement waitAndGetElement(WebDriver driver, By by) {
         long start = System.currentTimeMillis();
-        By by = By.name(locator);
         WebElement el = new WebDriverWait(driver, defaultTimeout).ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOfElementLocated(by));
-        log.info("Element located by " + locator + " appeared after " + (System.currentTimeMillis() - start) + " ms");
+        log.info("Element located by " + by + " appeared after " + (System.currentTimeMillis() - start) + " ms");
         return el;
     }
 
-    public static WebElement waitAndGetElement(WebDriver driver, String xpath) {
-        long start = System.currentTimeMillis();
-        By by = By.xpath(xpath);
-        WebElement el = new WebDriverWait(driver, defaultTimeout).ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOfElementLocated(by));
-        log.info("Element located by " + xpath + " appeared after " + (System.currentTimeMillis() - start) + " ms");
-        return el;
+    public static WebElement waitAndGetElementByName(WebDriver driver, String locator) {
+        return waitAndGetElement(driver, By.name(locator));
+    }
+
+    public static WebElement waitAndGetElementByXpath(WebDriver driver, String xpath) {
+        return waitAndGetElement(driver, By.xpath(xpath));
     }
 
     public static WebElement waitAndGetElement(int seconds, WebDriver driver, WebElement element) {

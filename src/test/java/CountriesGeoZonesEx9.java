@@ -9,13 +9,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import testbase.TestBase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static litecart.common.Utils.*;
 
-public class CountriesGeoZonesEx9 extends TestBase{
+public class CountriesGeoZonesEx9 extends TestBase {
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -48,7 +49,7 @@ public class CountriesGeoZonesEx9 extends TestBase{
     }
 
     private void assertThatListIsSorted(WebDriver driver, String listLocator) {
-        List<WebElement> webElementsList = waitAndGetElement(driver, "//table[@id='table-zones']")
+        List<WebElement> webElementsList = waitAndGetElementByXpath(driver, "//table[@id='table-zones']")
                 .findElements(By.xpath(listLocator));
 
         List<String> stringList = new ArrayList<>();
@@ -60,15 +61,15 @@ public class CountriesGeoZonesEx9 extends TestBase{
 
     private void switchToPreviousPage(WebDriver driver,  String pageTitle) {
         //switch back to previous page
-        WebElement cancelButton = waitAndGetElement(driver, "//button[@name='cancel']");
+        WebElement cancelButton = waitAndGetElementByXpath(driver, "//button[@name='cancel']");
         cancelButton.click();
 
-        waitAndGetElement(driver, "//h1[text()='"+ pageTitle +"']");
+        waitAndGetElementByXpath(driver, "//h1[text()='"+ pageTitle +"']");
     }
 
     @Test
     public void testCheckCountries() {
-        WebElement countryMenuItem = waitAndGetElement(driver, "//span[text()='Countries']");
+        WebElement countryMenuItem = waitAndGetElementByXpath(driver, "//span[text()='Countries']");
         countryMenuItem.click();
 
         //check that countries names are sorted
@@ -91,7 +92,7 @@ public class CountriesGeoZonesEx9 extends TestBase{
                 //switch to country's page
                 WebElement country = waitAndGetElementsListByXpath(driver, geoZoneCountListLocator).get(i).findElement(By.xpath("./following-sibling::td/a"));
                 country.click();
-                waitAndGetElement(driver, "//h1[text()=' Edit Country']");
+                waitAndGetElementByXpath(driver, "//h1[text()=' Edit Country']");
 
                 //check that zones list is sorted
                 //get zones web elements list
@@ -111,10 +112,10 @@ public class CountriesGeoZonesEx9 extends TestBase{
     public void testCheckGeoZones() {
         //2) на странице http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones
         //зайти в каждую из стран и проверить, что зоны расположены в алфавитном порядке
-        WebElement geoZonesMenuItem = waitAndGetElement(driver, "//a/span[text()='Geo Zones']");
+        WebElement geoZonesMenuItem = waitAndGetElementByXpath(driver, "//a/span[text()='Geo Zones']");
         geoZonesMenuItem.click();
 
-        waitAndGetElement(driver, "//h1[text()=' Geo Zones']");
+        waitAndGetElementByXpath(driver, "//h1[text()=' Geo Zones']");
 
         String locator = "//table[@class='dataTable']//td/a[string-length(text())>0]";
         List<WebElement> countriesList = waitAndGetElementsList(driver, By.xpath(locator));
@@ -126,7 +127,7 @@ public class CountriesGeoZonesEx9 extends TestBase{
             country.click();
 
             //wait until Edit Geo Zone Page loaded
-            waitAndGetElement(driver, "//h1[text()=' Edit Geo Zone']");
+            waitAndGetElementByXpath(driver, "//h1[text()=' Edit Geo Zone']");
 
             //check that zones list is sorted
             //get zones web elements list and check that it is sorted
