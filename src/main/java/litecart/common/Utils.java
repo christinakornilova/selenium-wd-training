@@ -57,7 +57,9 @@ public class Utils {
 
     public static void clearAndFillField(WebElement el, String data) {
         el.clear();
+        waitForSeconds(0.5);
         el.sendKeys(data);
+        waitForSeconds(0.5);
     }
 
     public static boolean isElementPresent(By by, WebDriver driver) {
@@ -87,7 +89,24 @@ public class Utils {
         }
     }
 
+    public static void waitForSeconds(double seconds) {
+        try {
+            Thread.sleep((long) seconds * 1000);
+        } catch (Exception e) {
+
+        }
+    }
+
     public static void waitForPageUrl(WebDriver driver, String expectedUrl) {
         new WebDriverWait(driver, defaultTimeout).until(ExpectedConditions.urlContains(expectedUrl));
     }
+
+    public static void waitForUrlToBe(WebDriver driver, String expectedUrl) {
+        new WebDriverWait(driver, defaultTimeout).until(ExpectedConditions.urlToBe(expectedUrl));
+    }
+
+    public static void waitUntilUrlContains(WebDriver driver, String urlPart) {
+        new WebDriverWait(driver, defaultTimeout).until(ExpectedConditions.urlContains(urlPart));
+    }
+
 }
