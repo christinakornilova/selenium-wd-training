@@ -2,6 +2,7 @@ package litecart.common;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -62,7 +63,7 @@ public class Utils {
         waitForSeconds(0.5);
     }
 
-    public static boolean isElementPresent(By by, WebDriver driver) {
+    public static boolean isElementPresent(WebDriver driver, By by) {
         return driver.findElements(by).size() == 1;
     }
 
@@ -107,6 +108,29 @@ public class Utils {
 
     public static void waitUntilUrlContains(WebDriver driver, String urlPart) {
         new WebDriverWait(driver, defaultTimeout).until(ExpectedConditions.urlContains(urlPart));
+    }
+
+    public static void waitUntilElementDisappears(int seconds, WebDriver driver, By by) {
+        long start = System.currentTimeMillis();
+        new WebDriverWait(driver, seconds).ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .until(ExpectedConditions.invisibilityOfElementLocated(by));
+        log.info("Element located by " + by + " appeared after " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    public static void waitUntilElementDisappears(WebDriver driver, By by) {
+        waitUntilElementDisappears(defaultTimeout, driver, by);
+    }
+
+    public static void adminPageNavigateAssertTitle(WebDriver driver, String menuItemName, boolean hasSubItems) {
+        do {
+            WebElement menuElement = waitAndGetElementByXpath(driver, "//span[@class='name' and .='" + menuItemName + "']");
+            menuElement.click();
+            waitForJS(driver);
+        } while (hasSubItems && !isElementPresent(driver, By.xpath("//li/ul/li[@class='selected']/a/span")));
+        waitAndGetElementByXpath(driver, "//td[@id='content']");
+        waitAndGetElementByXpath(driver, "//h1");
+        Assert.assertTrue("No header displayed on page", isElementPresent(driver, By.xpath("//h1")));
     }
 
 }

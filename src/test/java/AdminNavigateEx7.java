@@ -36,10 +36,10 @@ public class AdminNavigateEx7 {
             waitAndGetElementByXpath(driver, composeLocator(menuItemName));
             driver.findElement(By.xpath(composeLocator(menuItemName))).click();
             waitForJS(driver);
-        } while (hasSubItems && !isElementPresent(By.xpath("//li/ul/li[@class='selected']/a/span"), driver));
+        } while (hasSubItems && !isElementPresent(driver, By.xpath("//li/ul/li[@class='selected']/a/span")));
         waitAndGetElementByXpath(driver, "//td[@id='content']");
         waitAndGetElementByXpath(driver, "//h1");
-        Assert.assertTrue("No header displayed on page", isElementPresent(By.xpath("//h1"), driver));
+        Assert.assertTrue("No header displayed on page", isElementPresent(driver, By.xpath("//h1")));
 //        waitForSeconds(1);
     }
 
@@ -47,7 +47,7 @@ public class AdminNavigateEx7 {
     public void myFirstTest() {
         try {
             //login
-            String loginPwd = "litecart/admin";
+            String loginPwd = "admin";
 
             driver.get("http://localhost/litecart/admin/");
             wait.until(ExpectedConditions.urlContains("litecart/admin/"));
