@@ -57,10 +57,12 @@ public class AddNewProductEx12 extends AdminTestBase {
         WebElement statusEnabledLabel = Utils.waitAndGetElementByXpath(driver, "//label[text()=' Enabled']");
 
         Assert.assertTrue("General tab is not opened",
-                Utils.isElementPresent(Utils.waitAndGetElement(driver, activeListElement.findElement(By.xpath("./a[@href='#tab-general']")))));
+                Utils.isElementPresent(
+                        Utils.waitAndGetElement(driver, activeListElement.findElement(By.xpath("./a[@href='#tab-general']")))));
 
         WebElement statusEnabledRadioButton = Utils.waitAndGetElementByXpath(driver, "//label[text()=' Enabled']/input[@name='status']");
         do {
+            Utils.waitForSeconds(0.5);
             statusEnabledLabel.click();
             log.info("checked: " + statusEnabledRadioButton
                     .getAttribute("checked"));
@@ -118,7 +120,9 @@ public class AddNewProductEx12 extends AdminTestBase {
         WebElement priceUsdInput = Utils.waitAndGetElementByName(driver, "prices[USD]");
         Utils.clearAndFillField(priceUsdInput, "20.00");
 
-        saveButton.click();
+        do {
+            saveButton.click();
+        } while (Utils.isElementPresent(saveButton));
 
         //wait for success alert
         Utils.waitAndGetElementByXpath(driver, "//div[contains(@class,'success') and text()=' Changes were successfully saved.']");

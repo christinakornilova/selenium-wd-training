@@ -43,7 +43,8 @@ public class Utils {
 
     public static List<WebElement> waitAndGetElementsList(int timeout, WebDriver driver, By by) {
         long start = System.currentTimeMillis();
-        List<WebElement> elementList = new WebDriverWait(driver, timeout).ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+        List<WebElement> elementList = driver.findElements(by);
+        new WebDriverWait(driver, timeout).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
         log.info("Elements list located by " + by + " appeared after " + (System.currentTimeMillis() - start) + " ms");
         return  elementList;
     }
@@ -59,6 +60,7 @@ public class Utils {
     public static void clearAndFillField(WebElement el, String data) {
         el.clear();
         waitForSeconds(0.5);
+        el.click();
         el.sendKeys(data);
         waitForSeconds(0.5);
     }
@@ -98,7 +100,7 @@ public class Utils {
         }
     }
 
-    public static void waitForPageUrl(WebDriver driver, String expectedUrl) {
+    public static void waitForPageUrlToContain(WebDriver driver, String expectedUrl) {
         new WebDriverWait(driver, defaultTimeout).until(ExpectedConditions.urlContains(expectedUrl));
     }
 
@@ -131,6 +133,10 @@ public class Utils {
         waitAndGetElementByXpath(driver, "//td[@id='content']");
         waitAndGetElementByXpath(driver, "//h1");
         Assert.assertTrue("No header displayed on page", isElementPresent(driver, By.xpath("//h1")));
+    }
+
+    public static boolean isElementNotPresent(WebDriver driver, By by) {
+        return driver.findElements(by).isEmpty();
     }
 
 }
