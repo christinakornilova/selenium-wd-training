@@ -23,6 +23,7 @@ public class CatalogTestBase extends TestBase {
 //        driver = new SafariDriver();
         wait = new WebDriverWait(driver, 10);
 
+        driver.manage().window().maximize();
         driver.get("http://localhost/litecart/en/");
         wait.until(ExpectedConditions.urlContains("localhost/litecart"));
         waitForJS(driver);

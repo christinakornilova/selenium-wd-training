@@ -23,6 +23,7 @@ public class AdminTestBase extends TestBase {
 //        driver = new FirefoxDriver();
 //        driver = new SafariDriver();
         wait = new WebDriverWait(driver, 10);
+        driver.manage().window().maximize();
 
         driver.get("http://localhost/litecart/admin/");
         wait.until(ExpectedConditions.urlContains("litecart/admin/"));
