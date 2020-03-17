@@ -31,7 +31,10 @@ public class Utils {
     }
 
     public static WebElement waitAndGetElement(int seconds, WebDriver driver, WebElement element) {
-        return new WebDriverWait(driver, seconds).ignoring(NoSuchElementException.class).until(ExpectedConditions.visibilityOf(element));
+        return new WebDriverWait(driver, seconds)
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .until(ExpectedConditions.visibilityOf(element));
     }
 
     public static WebElement waitAndGetElement(WebDriver driver, WebElement element) {
@@ -53,6 +56,13 @@ public class Utils {
         return waitAndGetElementsList(defaultTimeout, driver, by);
     }
 
+    public static List<WebElement> waitAndGetElementsList(WebDriver driver, List<WebElement> list) {
+        long start = System.currentTimeMillis();
+        List<WebElement> elementList = new WebDriverWait(driver, defaultTimeout).until(ExpectedConditions.visibilityOfAllElements(list));
+        log.info("Elements list located by " + list.toString() + " appeared after " + (System.currentTimeMillis() - start) + " ms");
+        return elementList;
+    }
+
     public static List<WebElement> waitAndGetElementsListByXpath(WebDriver driver, String xpath) {
         return waitAndGetElementsList(driver, By.xpath(xpath));
     }
@@ -72,6 +82,7 @@ public class Utils {
     public static boolean isElementPresent(WebElement element) {
         try {
             ExpectedConditions.visibilityOf(element);
+            element.isDisplayed();
             return true;
         } catch (Exception e) {
             return false;
@@ -139,4 +150,7 @@ public class Utils {
         return driver.findElements(by).isEmpty();
     }
 
+    public static void waitForStalenessOfElement(WebDriver driver, WebElement element) {
+        new WebDriverWait(driver, defaultTimeout).until(ExpectedConditions.stalenessOf(element));
+    }
 }
